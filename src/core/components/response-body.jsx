@@ -116,9 +116,13 @@ export default class ResponseBody extends React.PureComponent {
       })
       bodyEl = <HighlightCode downloadable fileName={`${downloadName}.xml`} value={ body } getConfigs={ getConfigs } canCopy />
 
-      // HTML or Plain Text
-    } else if (toLower(contentType) === "text/html" || /text\/plain/.test(contentType)) {
-      bodyEl = <HighlightCode downloadable fileName={`${downloadName}.html`} value={ content } getConfigs={ getConfigs } canCopy />
+      // HTML
+    } else if (/text\/html/.test(contentType)) {
+      bodyEl = <iframe srcDoc={ content } style={{ width: "100%", border: "1px solid rgba(59,65,81,.2)", height: "30em" }}></iframe>
+
+      // Plain Text
+    } else if (/text\/plain/.test(contentType)) {
+      bodyEl = <HighlightCode downloadable fileName={`${downloadName}.txt`} value={ content } getConfigs={ getConfigs } canCopy />
 
       // CSV
     } else if (toLower(contentType) === "text/csv" || /text\/csv/.test(contentType)) {
